@@ -8,9 +8,9 @@ def init():
     global tokenizer
     
     device = 0 if torch.cuda.is_available() else -1
-    pipeline('question-answering', 
-             model=BertForQuestionAnswering.from_pretrained('bert-large-uncased-whole-word-masking-finetuned-squad'),
-             tokenizer=BertTokenizer.from_pretrained('bert-large-uncased-whole-word-masking-finetuned-squad'))
+    model =  BertForQuestionAnswering.from_pretrained('bert-large-uncased-whole-word-masking-finetuned-squad')
+    tokenizer = BertTokenizer.from_pretrained('bert-large-uncased-whole-word-masking-finetuned-squad')
+    pipeline('question-answering', model=model, tokenizer=tokenizer)
 
 # Inference is ran for every server call
 # Reference your preloaded global model variable here.
