@@ -8,7 +8,7 @@ def init():
     global tokenizer
     
     device = 0 if torch.cuda.is_available() else -1
-    model = BertModel.from_pretrained('bert-base-uncased',          output_hidden_states = True, device=device)
+    model = BertModel.from_pretrained('bert-base-uncased',          output_hidden_states = True)
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
 
