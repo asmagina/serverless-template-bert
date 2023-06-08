@@ -1,5 +1,6 @@
 from transformers import pipeline, BertForQuestionAnswering, BertTokenizer
 import torch
+import time
 
 # Init is ran on server startup
 # Load your model to GPU as a global variable here using the variable name "model"
@@ -21,6 +22,8 @@ def inference(model_inputs:dict) -> dict:
     # Parse out your arguments
     question = model_inputs.get('question', None)
     text = model_inputs.get('text', None)
+
+    start = time.time()
 
     input_ids = tokenizer.encode(question, text)
     tokens = tokenizer.convert_ids_to_tokens(input_ids)
@@ -44,6 +47,6 @@ def inference(model_inputs:dict) -> dict:
         answer = " ".join(tokens[answer_start:answer_end+1])
     else:
         answer = "I am unable to find the answer to this question. Can you please ask another question?"
-    
+    stop = time.time()
     # Return the results as a dictionary
-    return answer
+    return {'answer': answer, 'time': stop - start}
