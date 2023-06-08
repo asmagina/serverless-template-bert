@@ -38,7 +38,7 @@ def inference(model_inputs:dict) -> dict:
     segment_ids = [0]*num_seg_a + [1]*num_seg_b
     #making sure that every input token has a segment id
     assert len(segment_ids) == len(input_ids)
-
+    stop1 = time.time()
     output = model(torch.tensor([input_ids]),  token_type_ids=torch.tensor([segment_ids]))
     answer = None
     answer_start = torch.argmax(output.start_logits)
@@ -49,4 +49,4 @@ def inference(model_inputs:dict) -> dict:
         answer = "I am unable to find the answer to this question. Can you please ask another question?"
     stop = time.time()
     # Return the results as a dictionary
-    return {'answer': answer, 'time': stop - start}
+    return {'answer': answer, 'time': stop - start, 'time_preproc': stop1 - start}
